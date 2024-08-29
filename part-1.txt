@@ -1,0 +1,66 @@
+1. A lot of types are also JS objects. For example, arrays are objects. It will result as true.
+2. If not in strict mode, b becomes a global variable. a is not defined, but b is defined. a is declared with var so it is scoped to the function that it is declared in.
+3. outer func: this.foo = bar, outer func: self.foo = bar, inner func: this.foo = undefined, inner func: self.foo = bar. In the outer function, this and self refer to myObject. In the inner function, this doesn't refer to myObject. self is a local variable scoped to the outside function, and inner function has access to self.
+4. It is a common practice to create closure around the contents to create a private namespace and avoid name clashes. It also allows an easily referenceable and shorter alias for global variable.
+5. It helps enforce stricter parsing and error handling on the code. Without it, errors would have been ignored or failed silently. Benefits include: easier debugging, prevents accidental globals, eliminates this coercion, it disallows duplicate param values, makes eval() safer, and throws error on invalid usage of delete.
+6. They will not return the same thing due to ASI. The first one will return {bar: "hello"}, and the second one will return undefined. 
+7. 0.30000004, false because numbers in JS are all treated with floating point precision.
+8. 1,4,3,2 simple calls to console.log are logged without delay. 2 is logged last due to 1000 ms compared to 0 ms. The setTimeout() executions happen due to being added to the event queue and executed when the queue and checked for onload events like setTimeout().
+9. const isPalindrome = (str) => {
+    let reverseStr = '';
+for (let i = str.length - 1; i >= 0; i--){
+    reverseStr += str[i];
+}
+return reverseStr === str;
+};
+function isPalindrome(str) {
+    return str === str.split('').reverse().join('');
+}
+10. const sum = (x, y) => {
+    if (y !== undefined) {
+        return x + y;
+    } else {
+        return function(y) {return x + y;};
+    }
+};
+11. (a) 5 because var is used, so the same i is used and it is globally scoped. The moment the loop is finished and all buttons are added, i will be 5.
+(b) replace var with let so that a new i scoped to the loop will print out the corresponding i we want. 
+12. The object will be {'zebra': undefined, 'horse': undefined}
+13. array 1: length=5 last=j,o,n,e,s 
+array 2: length=5 last=j,o,n,e,s 
+reverse array method reverses array in place. arr1 === arr2 
+14. "122", "32", "02", "112", "NaN2", NaN. Because str is added with number, it converts 1 to "1". With a + in front of str, it convert str to number.
+15. Use setTimeout(nextListItem, 0) so that timeout function is pushed to event queue. Without it, frames will never unwind in call stack leading to stack overflow.
+16. Closure is an inner function that has access to variables in the outer function's scope chain. For example, if the outside function declares a variable, then the inside function can manipulate and returns the value long after the outer function has been executed.
+17. "0 || 1 = 1"
+"1 || 2 = 1" 
+"0 && 1 = 0" since falsy with unary plus operator 0 is returned
+"1 && 2 = 2" since both are truthy it moves to right-hand operand, evaluates, and returns 2.
+18. true, false === same type and value, == coerces valuess before comparing
+19. 456 both b and c will be convertd to [object Object], and finally a["[object Object]"] is set to 456.
+20. 3628800 
+21. 1, x is not defined in the inner function, so the scope of the outer function is searched for defined variable x. 
+22. undefined 'John Doe' because stoleSecretIdentity just extract object's method, so it is being invoked in the global context the window object. If hero.getSecretIdentity.bind(hero) is used then we can get the correct output.
+23. function visitElement(el, callback) {
+    callback(el);
+    const elChildren = el.children;
+    for (let i = 0; i < elChildren.length; i++) {
+        visitElement(elChildren[i], callback);
+    }
+} 
+DFS
+24. 10, 2 fn is passed as a parameter, the scope of fn is window. arguments[0] refers to the fn function that is called through arguments[0] invoked with obj as context this refers to arguemtns object and length property of arguments object takes precedence and length is 2 due to 2 elements.
+25. 1. undefined, 2. with var, x is declared and hoisted but not its assignment, so the console.log(x) outside try and catch will return undefined.
+26. undefined. inside girl, var x is hoisted to the top of the function scope. x is declared inside girl function but not initialized.
+27. 0, 1, 2, 3, 4 because let is used instead of var. i is only seen in the for loop's block scope.
+28. true, false, true has value of 1 and 1 > 1 is false.
+29. Array.unshift('start') Array.push('end')
+30. (a) no
+(b) undefined but will remain empty.
+31. true because null is treated as any other undefined variable. NULL is treated as a variable since null isn't used and JS is case-sensitive.
+32. string typeof1 returns number and typeof "number" returns string.
+33. 5, 5, 5, 5, 5 because var is used. Each function within loop executes after entire loop compoletes and refers to last value stored global scope i which is 5. Closures can be used by creating a unique scope for each iteration, function(x) {...}(i). or you can use let in an es2015 context.
+34. NaN is not a number. Appears when trying to subtract, multiply, or divide number with string. Its type is number. typeof NaN === "number" logs true; NaN === NaN logs false. use built-in function isNaN() semi-reliable. Better to use value !== value will log true iff value is equal to NaN. es6 has Number.isNaN() different and more reliable than old global isNaN().
+35. 3 due to var b being initialized inside inner()
+36. if (typeof x === 'number' %% x % 1 === 0) return true. Number.isInteger() from ES6. Should not use Math.floor or Math.ceil or Math.round() because returns true for Infinity and -Infinity. parseInt doesn't work when numbers become too large and presented in exponential form.
+37. const clone = Object.assign({}, obj); shallow copy meaning nested objects aren't copied but copied by reference. 
